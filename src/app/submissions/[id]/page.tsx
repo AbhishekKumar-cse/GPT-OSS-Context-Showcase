@@ -7,6 +7,7 @@ import { ExternalLink, Github, Eye, ThumbsUp, Download, Share2 } from 'lucide-re
 import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import SubmissionEvaluation from '@/components/submission-evaluation';
 
 export default async function SubmissionPage({ params }: { params: { id: string } }) {
   const submission = await getSubmissionById(params.id);
@@ -63,6 +64,8 @@ export default async function SubmissionPage({ params }: { params: { id: string 
         </div>
 
         <aside className="lg:col-span-1 space-y-6">
+          <SubmissionEvaluation submission={submission} />
+
           <Card>
             <CardHeader>
               <CardTitle>Project Links</CardTitle>
