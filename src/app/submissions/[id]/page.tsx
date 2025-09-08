@@ -8,6 +8,7 @@ import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import SubmissionEvaluation from '@/components/submission-evaluation';
+import ModelViewer from '@/components/model-viewer';
 
 export default async function SubmissionPage({ params }: { params: { id: string } }) {
   const submission = await getSubmissionById(params.id);
@@ -17,6 +18,7 @@ export default async function SubmissionPage({ params }: { params: { id: string 
   }
 
   const CategoryIcon = Icons[submission.category.id];
+  const has3dModel = submission.media.model3d && (submission.category.id === 'robotics' || submission.category.id === 'weirdest-hardware');
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -35,20 +37,27 @@ export default async function SubmissionPage({ params }: { params: { id: string 
             </p>
           </header>
 
-          {submission.media.demoVideo && (
-            <div className="aspect-video w-full overflow-hidden rounded-lg border mb-6">
-                <iframe
-                    className="w-full h-full"
-                    src={submission.media.demoVideo.replace('watch?v=', 'embed/')}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                ></iframe>
+          {has3dModel ? (
+            <div>
+              <h2 className="text-2xl font-bold font-headline mb-4">3D & AR Model</h2>
+              <ModelViewer src={submission.media.model3d!} alt={`${submission.title} 3D Model`} />
             </div>
+          ) : (
+            submission.media.demoVideo && (
+              <div className="aspect-video w-full overflow-hidden rounded-lg border mb-6">
+                  <iframe
+                      className="w-full h-full"
+                      src={submission.media.demoVideo.replace('watch?v=', 'embed/')}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                  ></iframe>
+              </div>
+            )
           )}
 
-          <div className="prose dark:prose-invert max-w-none mb-8">
+          <div className="prose dark:prose-invert max-w-none my-8">
             <p>{submission.description}</p>
           </div>
           

@@ -52,6 +52,7 @@ const submissions: Submission[] = [
       demoVideo: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
       screenshots: ['https://picsum.photos/seed/rgb1/600/400', 'https://picsum.photos/seed/rgb2/600/400'],
       codeRepository: 'https://github.com/bob/garden-bot',
+      model3d: 'https://modelviewer.dev/shared-assets/models/RobotExpressive.glb',
     },
     metrics: { views: 4200, likes: 1500, downloads: 300, shares: 250 },
     timestamps: { submitted: new Date('2024-07-12T11:20:00Z'), lastUpdated: new Date('2024-07-20T10:00:00Z') },
@@ -76,6 +77,7 @@ const submissions: Submission[] = [
       demoVideo: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
       screenshots: ['https://picsum.photos/seed/wh1/600/400', 'https://picsum.photos/seed/wh2/600/400'],
       codeRepository: 'https://github.com/charlie/musical-toaster',
+      model3d: 'https://modelviewer.dev/shared-assets/models/Toaster.glb'
     },
     metrics: { views: 8600, likes: 3200, downloads: 120, shares: 800 },
     timestamps: { submitted: new Date('2024-07-01T18:00:00Z'), lastUpdated: new Date('2024-07-05T12:00:00Z') },

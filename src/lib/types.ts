@@ -25,6 +25,7 @@ export interface Submission {
     screenshots: string[];
     codeRepository: string;
     documentation?: string;
+    model3d?: string;
   };
   metrics: {
     views: number;
