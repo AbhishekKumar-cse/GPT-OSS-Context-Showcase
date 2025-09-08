@@ -1,33 +1,31 @@
 import { Suspense } from 'react';
-import { getSubmissions } from '@/lib/mock-data';
-import type { Submission } from '@/lib/types';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
+import { getSubmissions, categories } from '@/lib/mock-data';
+import { notFound } from 'next/navigation';
 import { SubmissionCard } from '@/components/submission-card';
 import Filters from '@/components/filters';
 
-export default async function Home({
+export function generateStaticParams() {
+  return categories.map((category) => ({
+    slug: category.id,
+  }));
+}
+
+export default async function CategoryPage({ 
+  params,
   searchParams,
-}: {
+}: { 
+  params: { slug: string };
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-  const category =
-    typeof searchParams?.category === 'string' ? searchParams.category : 'all';
-  const sortBy =
-    typeof searchParams?.sortBy === 'string' ? searchParams.sortBy : 'newest';
+  const category = categories.find(c => c.id === params.slug);
+  if (!category) {
+    notFound();
+  }
+  
+  const sortBy = typeof searchParams?.sortBy === 'string' ? searchParams.sortBy : 'newest';
   const query = typeof searchParams?.q === 'string' ? searchParams.q : '';
 
-  let submissions = await getSubmissions();
-
-  if (category !== 'all') {
-    submissions = submissions.filter((s) => s.category.id === category);
-  }
+  let submissions = (await getSubmissions()).filter(s => s.category.id === params.slug);
   
   if (query) {
     submissions = submissions.filter(
@@ -50,15 +48,15 @@ export default async function Home({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <header className="mb-8 text-center">
+      <header className="mb-8">
         <h1 className="text-4xl font-bold font-headline tracking-tight lg:text-5xl">
-          GPT-OSS Contest Showcase
+          Category: {category.name}
         </h1>
-        <p className="mt-4 text-lg text-muted-foreground">
-          Explore the most innovative applications from the GPT-OSS contest.
+        <p className="mt-2 text-lg text-muted-foreground">
+          Explore submissions for the "{category.name}" category.
         </p>
       </header>
-      
+
       <Suspense fallback={<div>Loading filters...</div>}>
         <Filters />
       </Suspense>
