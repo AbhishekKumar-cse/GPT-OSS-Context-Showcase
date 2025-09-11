@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import SubmissionEvaluation from '@/components/submission-evaluation';
 import ModelViewer from '@/components/model-viewer';
+import TaglineGenerator from '@/components/tagline-generator';
 
 export default async function SubmissionPage({ params }: { params: { id: string } }) {
   const submission = await getSubmissionById(params.id);
@@ -32,6 +33,7 @@ export default async function SubmissionPage({ params }: { params: { id: string 
             <h1 className="text-4xl font-bold font-headline tracking-tight">
               {submission.title}
             </h1>
+            <TaglineGenerator description={submission.description} />
             <p className="text-lg text-muted-foreground mt-2">
               by {submission.author.name} {submission.author.organization && `(${submission.author.organization})`}
             </p>
